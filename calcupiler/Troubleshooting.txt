@@ -1,0 +1,5 @@
+P: 'constexpr' call flows off the end of the function
+S: 
+
+P: operation on 'x' may be undefined [-Wsequence-point]
+S: 
