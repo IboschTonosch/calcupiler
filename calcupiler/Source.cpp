@@ -46,10 +46,11 @@ int main()
 	static_assert(isWithinTolerance(e_y1, 20.08553), "euler function failed");
 	constexpr auto e_y2 = CSimple<double>::e_exp(0.5);
 	static_assert(isWithinTolerance(e_y2, 1.64872), "euler function failed");
-	constexpr auto e_y = CSimple<double>::e_exp(-0.4);
-	static_assert(isWithinTolerance(e_y, 0.67032), "euler function failed");
+	constexpr auto e_y3 = CSimple<double>::e_exp(-0.4);
+	static_assert(isWithinTolerance(e_y3, 0.67032), "euler function failed");
 
-	//constexpr auto ln = CSimple<double>::ln(0.5);
+	constexpr auto ln = CSimple<double>::ln(0.5);
+	static_assert(isWithinTolerance(ln, -0.69314));
 
 	//constexpr auto ln2 = CSimple<int>::ln('a');
 
