@@ -29,13 +29,26 @@ int main()
 
 	constexpr auto pow1 = CSimple<double>::Pow(1.4, 2);
 	static_assert(isWithinTolerance(pow1, 1.96), "pow function failed");
-	//constexpr auto pow2 = CSimple<double>::Pow(1.4, 0.24);
-	//static_assert(isWithinTolerance(pow2, 0.0841), "pow function failed");
+	constexpr auto pow2 = CSimple<double>::Pow(-1, 1);
+	static_assert(isWithinTolerance(pow2, -1), "pow function failed");
+	//constexpr auto pow3 = CSimple<double>::Pow(2, -2);
+	//static_assert(isWithinTolerance(pow3, 0.25), "pow function failed");
+	//constexpr auto pow4 = CSimple<double>::Pow(1.4, 0.24);
+	//static_assert(isWithinTolerance(pow4, 0.0841), "pow function failed");
 
+	// Factorial Integral
+	constexpr auto factorial0 = CSimple<int>::factorial(0);
+	static_assert(factorial0 == 0, "factorial function failed");
 	constexpr auto factorial1 = CSimple<int>::factorial(1);
-	static_assert(isWithinTolerance(factorial1, 1), "factorial function failed");
-	constexpr auto factorial2 = CSimple<int>::factorial(5);
-	static_assert(isWithinTolerance(factorial2, 120), "factorial function failed");
+	static_assert(factorial1 == 1, "factorial function failed");
+	constexpr auto factorial2 = CSimple<int>::factorial(2);
+	static_assert(factorial2 == 2, "factorial function failed");
+	constexpr auto factorial3 = CSimple<int>::factorial(3);
+	static_assert(factorial3 == 6, "factorial function failed");
+	constexpr auto factorial4 = CSimple<int>::factorial(4);
+	static_assert(factorial4 == 24, "factorial function failed");
+	constexpr auto factorial5 = CSimple<int>::factorial(5);
+	static_assert(factorial5 == 120, "factorial function failed");
 	//constexpr auto factorial_f1 = CSimple<int>::factorial(0.45);
 	//static_assert(isWithinTolerance(factorial_f1, 120), "factorial function failed");
 
@@ -49,12 +62,18 @@ int main()
 	constexpr auto e_y3 = CSimple<double>::e_exp(-0.4);
 	static_assert(isWithinTolerance(e_y3, 0.67032), "euler function failed");
 
-	constexpr auto ln = CSimple<double>::ln(0.5);
-	static_assert(isWithinTolerance(ln, -0.69314));
 
-	//constexpr auto ln2 = CSimple<int>::ln('a');
+	constexpr auto ln = CSimple<double>::ln(1);
+	static_assert(isWithinTolerance(ln, 0.0));
+	constexpr auto ln2 = CSimple<double>::ln(2);
+	static_assert(isWithinTolerance(ln2, 0.69314));
+	constexpr auto ln3 = CSimple<double>::ln(0.5);
+	static_assert(isWithinTolerance(ln3, -0.69314));
 
-	//static_assert(ln > 20, "bla");
+	
+	constexpr auto binomial1 = CSimple<int>::binomial(3, 2);
+	static_assert(isWithinTolerance(binomial1, 3));
+
 	return 0;
 }
 

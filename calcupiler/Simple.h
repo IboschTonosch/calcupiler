@@ -71,7 +71,8 @@ namespace Calcupiler
 			/// </summary>
 			template<typename E, typename = std::is_floating_point<E>>
 			static constexpr T Pow_f(T basis, E exp) {
-				return exp == 1 ? basis : basis * Pow_f(basis, exp - 1);
+				return Pow(e, exp * ln(basis));
+				//return exp == 1 ? basis : basis * Pow_f(basis, exp - 1);
 			}
 
 			/// <summary>
@@ -140,20 +141,49 @@ namespace Calcupiler
 			//static constexpr T series()
 			
 			/// <summary>
-			/// Logarithmus naturales of x
+			/// Logarithmus naturales of x; For x > 0 && x < 1
 			/// </summary>
 			static constexpr T ln(T x)  {
-				if (x == static_cast<T>(1)) return 0;
+				if (x == static_cast<T>(1)) return static_cast<T>(0);
 
+				if (x < static_cast<T>(1)) {
+					T res = 0.0;
+					for (int k = 1; k < 100; k++)
+					{
+						res += (Pow(-1, k) * Pow(-1 + x, k)) / k;
+					}
+					return -res;
+				}
+				else
+				{
+					return ln2(x);
+				}
+			}
+
+			/// <summary>
+			/// Logarithmus naturales of x for x > 1
+			/// </summary>
+			static constexpr T ln2(T x) {
 				T res = 0.0;
-				constexpr auto minus = static_cast<T>(-1);
-				constexpr auto one = static_cast<T>(1);
+
 				for (int k = 1; k < 100; k++)
 				{
-					res += ((Pow(minus, (k + 1)) / k) * Pow(x, k));
+					res += (Pow(-1, k) * Pow(-1 + (-1 + x), k)) / k;
 				}
 
-				return e_exp(res);
+				for (int k = 1; k < 100; k++)
+				{
+					res -= (Pow(-1, k) * Pow(-1 + x, k)) / k;
+				}
+
+				return -res;
+			}
+			
+			/// <summary>
+			/// Binomial coefficient with n over k.
+			/// </summary>
+			static constexpr T binomial(T n, T k) {
+				return (factorial(n) / (factorial(k) * factorial(n - k)));
 			}
 
 		private:
