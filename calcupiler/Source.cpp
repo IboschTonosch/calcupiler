@@ -1,6 +1,8 @@
 #include "Simple.h"
 #include <string>
 #include <math.h>
+#include <type_traits>
+#include <typeinfo>
 
 using namespace Calcupiler::Simple;
 
@@ -14,19 +16,61 @@ constexpr bool isWithinTolerance(double givenVal, double expectedValue) {
 
 int main() 
 {
+	/// SUM (double)
+	constexpr auto sum1 = CSimple<double>::Sum(1.3, 4.2);
+	static_assert(isWithinTolerance(sum1, 5.5), "sum function failed");
+	constexpr auto sum2 = CSimple<double>::Sum(-1.3, 4.2);
+	static_assert(isWithinTolerance(sum2, 2.9), "sum function failed");
+	constexpr auto sum3 = CSimple<double>::Sum(1.3, -4.2);
+	static_assert(isWithinTolerance(sum3, -2.9), "sum function failed");
+	constexpr auto sum4 = CSimple<double>::Sum(-1.3, -4.2);
+	static_assert(isWithinTolerance(sum4, -5.5), "sum function failed");
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum1)>, double>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum2)>, double>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum3)>, double>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum4)>, double>);
 
-	constexpr auto sum = CSimple<double>::Sum(1.3, 4.2);
-	static_assert(isWithinTolerance(sum, 5.5), "mul function failed");
+	/// SUM (float)
+	constexpr auto sum5 = CSimple<float>::Sum(1.3, 4.2);
+	static_assert(isWithinTolerance(sum5, 5.5), "sum function failed");
+	constexpr auto sum6 = CSimple<float>::Sum(-1.3, 4.2);
+	static_assert(isWithinTolerance(sum6, 2.9), "sum function failed");
+	constexpr auto sum7 = CSimple<float>::Sum(1.3, -4.2);
+	static_assert(isWithinTolerance(sum7, -2.9), "sum function failed");
+	constexpr auto sum8 = CSimple<float>::Sum(-1.3, -4.2);
+	static_assert(isWithinTolerance(sum8, -5.5), "sum function failed");
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum5)>, float>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum6)>, float>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum7)>, float>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum8)>, float>);
 
+	/// SUM (long double)
+	constexpr auto sum9 = CSimple<long double>::Sum(1.3, 4.2);
+	static_assert(isWithinTolerance(sum9, 5.5), "sum function failed");
+	constexpr auto sum10 = CSimple<long double>::Sum(-1.3, 4.2);
+	static_assert(isWithinTolerance(sum10, 2.9), "sum function failed");
+	constexpr auto sum11 = CSimple<long double>::Sum(1.3, -4.2);
+	static_assert(isWithinTolerance(sum11, -2.9), "sum function failed");
+	constexpr auto sum12 = CSimple<long double>::Sum(-1.3, -4.2);
+	static_assert(isWithinTolerance(sum12, -5.5), "sum function failed");
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum9)>, long double>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum10)>, long double>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum11)>, long double>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(sum12)>, long double>);
+
+	/// DIFFERENCE
 	constexpr auto diff = CSimple<double>::Diff(3.45, 5.2);
 	static_assert(isWithinTolerance(diff, -1.75), "diff function failed");
 
+	/// Multiplication
 	constexpr auto mul = CSimple<double>::Mul(1.3, 4.2);
 	static_assert(isWithinTolerance(mul, 5.46), "mul function failed");
 
+	/// Division
 	constexpr auto div = CSimple<double>::Div(1.45, 2.2);
 	static_assert(isWithinTolerance(div, 0.6591), "div function failed");
 
+	/// Power of y over x
 	constexpr auto pow1 = CSimple<double>::Pow(1.4, 2);
 	static_assert(isWithinTolerance(pow1, 1.96), "pow function failed");
 	constexpr auto pow2 = CSimple<double>::Pow(-1, 1);
@@ -36,7 +80,7 @@ int main()
 	//constexpr auto pow4 = CSimple<double>::Pow(1.4, 0.24);
 	//static_assert(isWithinTolerance(pow4, 0.0841), "pow function failed");
 
-	// Factorial Integral
+	/// Factorial (Integral)
 	constexpr auto factorial0 = CSimple<int>::factorial(0);
 	static_assert(factorial0 == 0, "factorial function failed");
 	constexpr auto factorial1 = CSimple<int>::factorial(1);
