@@ -97,21 +97,7 @@
 //	static_assert(isWithinTolerance(CSimple<double>::Pow(1.01100009, 400), 79.5202434343), "pow function failed");
 //}
 //
-//static void SIMPLE_TEST_FACTORIAL_INTEGER()
-//{
-//	constexpr auto factorial0 = CSimple<int>::factorial(0);
-//	static_assert(factorial0 == 0, "factorial function failed");
-//	constexpr auto factorial1 = CSimple<int>::factorial(1);
-//	static_assert(factorial1 == 1, "factorial function failed");
-//	constexpr auto factorial2 = CSimple<int>::factorial(2);
-//	static_assert(factorial2 == 2, "factorial function failed");
-//	constexpr auto factorial3 = CSimple<int>::factorial(3);
-//	static_assert(factorial3 == 6, "factorial function failed");
-//	constexpr auto factorial4 = CSimple<int>::factorial(4);
-//	static_assert(factorial4 == 24, "factorial function failed");
-//	constexpr auto factorial5 = CSimple<int>::factorial(5);
-//	static_assert(factorial5 == 120, "factorial function failed");
-//}
+
 //
 //static void SIMPLE_TEST_EXP_DOUBLE()
 //{

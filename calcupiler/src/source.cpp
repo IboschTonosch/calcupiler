@@ -9,23 +9,33 @@ using namespace Calcupiler::Basic;
 
 using SimpleCalculator = CBasic<double>;
  
-double poww(double basis, int exp) {
-	return exp == 1 ? basis : basis * poww(basis, exp - 1);
-}
-
-double powwf(double basis, double exp) {
-	double res = 0.0;
-	for (int i = 0; i < 10; i++)
-	{
-		res += CBasic<double>::ln(basis);
-	}
-	return res;
-}
+//double poww(double basis, int exp) {
+//	return exp == 1.0 ? basis : poww(e, exp * CBasic<double>::ln(basis));
+//}
+//
+//double fact(double k) {
+//	return k < 2 ? k : k * fact(--k);
+//}
+//
+//double bin(double n, double k) {
+//	return (fact(n) / (fact(k) * fact(n - k)));
+//}
+//
+//double powwf(double basis, double exp) {
+//	double res = 0.0;
+//	for (int i = 0; i < 10; i++)
+//	{
+//		res += CBasic<double>::ln(basis);
+//	}
+//	return res;
+//}
 
 int main() 
 {
-	auto bla = powwf(3, 1.2);
-	auto blu = 2.3;
+	//auto bla = bin(3, 2);
+
+	//auto bla = powwf(3, 1.2);
+	//auto blu = 2.3;
 	//SIMPLE_TEST_SUM_FLOAT();
 	//SIMPLE_TEST_SUM_DOUBLE();
 	//SIMPLE_TEST_SUM_LONG_DOUBLE();

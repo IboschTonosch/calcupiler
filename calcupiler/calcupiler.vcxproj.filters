@@ -10,6 +10,12 @@
     <ClCompile Include="test\test_basic_pow.cpp">
       <Filter>test</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_basic_factorial.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_basic_binomial.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Troubleshooting.txt" />
@@ -28,6 +34,9 @@
   <ItemGroup>
     <ClInclude Include="include\basic.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="test\test_helper.hpp">
+      <Filter>test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

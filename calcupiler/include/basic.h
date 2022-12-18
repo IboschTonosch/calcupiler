@@ -18,6 +18,13 @@ namespace Calcupiler
 			//constexpr bool is_type_char(){
 			//	return std::is_same_v<T, char>;
 			//};
+
+			template<typename N>
+			static constexpr bool is_negative(N value)
+			{
+				return value < 0;
+			}
+
 			static_assert(
 				(std::is_integral_v<T> || std::is_floating_point_v<T>), 
 				"Type must be either integral or floating point"
@@ -48,7 +55,42 @@ namespace Calcupiler
 				return lhs / rhs;
 			}
 
+			//static constexpr T Frac(const T lhs, const T rhs) noexcept {
+			//	int left = 0;
+			//	int right = 0;
+			//	int n = 0;
+			//	T b = rhs;
+			//	for (int i = 0; i < 10; i++)
+			//	{
+			//		if (lhs > b)
+			//		{
+			//			left++;
+			//			b += rhs;
+			//		}
+			//	}
+			//	return b;
+			//}
+
 			//#########################################################
+
+			/// <summary>
+			/// The factorial of k
+			/// </summary>
+			static constexpr T factorial(T k) {
+				return std::is_integral_v<T> ?
+					factorial_i(k) : factorial_f(k);
+			}
+
+			template<typename E, typename = std::is_integral<E>>
+			static constexpr E factorial_i(E k) {
+				static_assert(std::is_integral_v<E>, "Only integral types are allowed.");
+				return k < 2 ? k : k * factorial_i(--k);
+			}
+
+			static constexpr T factorial_f(T k) {
+				return 1.0;
+				//TODO:: implement floating point factorial
+			}
 
 			/// <summary>
 			/// Power of exp over basis
@@ -56,6 +98,7 @@ namespace Calcupiler
 			template<typename E>
 			static constexpr T Pow(T basis, E exp) {
 				return basis == static_cast<T>(0) ? static_cast<T>(0) // if basis is zero -> return zero
+					: is_negative(exp) ? 1 / Pow_i(basis, -1.0 * exp)
 					: (std::is_integral_v<E> ? Pow_i(basis, exp) : Pow_f(basis, exp));
 			}
 
@@ -74,26 +117,6 @@ namespace Calcupiler
 			static constexpr T Pow_f(T basis, E exp) {
 				//return exp == 1.0 ? basis : Pow_f(2.2,2);
 				return exp == 1.0 ? basis : Pow_f(e, exp * CBasic<T>::ln(basis));
-			}
-
-			/// <summary>
-			/// The factorial of k
-			/// </summary>
-			static constexpr T factorial(T k) {
-				return std::is_integral_v<T> ? 
-					 factorial_i(k) : factorial_f(k);
-			}
-
-			template<typename E, typename = std::is_integral<E>>
-			static constexpr E factorial_i(E k) {
-				static_assert(std::is_integral_v<E>, "Only integral types are allowed.");
-				return k < 2 ? k : k * factorial_i(--k);
-				//TODO:: implement floating point factorial
-			}
-
-			static constexpr T factorial_f(T k) {
-				return 1.0;
-				//TODO:: implement floating point factorial
 			}
 			
 #ifdef e
@@ -190,13 +213,12 @@ namespace Calcupiler
 			/// Binomial coefficient with n over k.
 			/// </summary>
 			static constexpr T binomial(T n, T k) {
-				return (factorial(n) / (factorial(k) * factorial(n - k)));
+				return 
+					n == k ? 1
+					: n < k ? 0
+					: k == 0 ? 1
+					: (factorial(n) / (factorial(k) * factorial(n - k)));
 			}
-
-		private:
-
-			//constexpr T m_value = 2.0;
-
 		};
 	}
 }

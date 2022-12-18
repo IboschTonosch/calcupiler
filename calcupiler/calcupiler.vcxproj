@@ -118,6 +118,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="src\source.cpp" />
+    <ClCompile Include="test\test_basic_binomial.cpp" />
+    <ClCompile Include="test\test_basic_factorial.cpp" />
     <ClCompile Include="test\test_basic_pow.cpp" />
     <ClCompile Include="test\test_simple.cpp" />
   </ItemGroup>
@@ -126,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\basic.h" />
+    <ClInclude Include="test\test_helper.hpp" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
