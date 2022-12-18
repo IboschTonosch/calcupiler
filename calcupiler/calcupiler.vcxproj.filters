@@ -7,6 +7,9 @@
     <ClCompile Include="test\test_simple.cpp">
       <Filter>test</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_basic_pow.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Troubleshooting.txt" />
@@ -23,7 +26,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\simple.h">
+    <ClInclude Include="include\basic.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

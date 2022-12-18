@@ -1,13 +1,13 @@
-#include "../include/simple.h"
+#include "../include/basic.h"
 
 #include <string>
 #include <math.h>
 #include <type_traits>
 #include <typeinfo>
 
-using namespace Calcupiler::Simple;
+using namespace Calcupiler::Basic;
 
-using SimpleCalculator = CSimple<double>;
+using SimpleCalculator = CBasic<double>;
  
 double poww(double basis, int exp) {
 	return exp == 1 ? basis : basis * poww(basis, exp - 1);
@@ -17,7 +17,7 @@ double powwf(double basis, double exp) {
 	double res = 0.0;
 	for (int i = 0; i < 10; i++)
 	{
-		res += CSimple<double>::ln(basis);
+		res += CBasic<double>::ln(basis);
 	}
 	return res;
 }

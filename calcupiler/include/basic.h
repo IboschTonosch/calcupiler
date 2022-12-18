@@ -9,10 +9,10 @@ using namespace std::numbers;
 
 namespace Calcupiler
 {
-	namespace Simple
+	namespace Basic
 	{
 		template<typename T, typename = std::remove_reference_t<std::decay_t<T>>>
-		class CSimple
+		class CBasic
 		{
 		public:
 			//constexpr bool is_type_char(){
@@ -24,8 +24,8 @@ namespace Calcupiler
 				);
 			static_assert(!std::is_same_v<T, char>, "Character type is not allowed");
 			
-			constexpr CSimple() = delete;
-			~CSimple() = delete;
+			constexpr CBasic() = delete;
+			~CBasic() = delete;
 
 			//static constexpr SimpleCalc<T>& operator+(const SimpleCalc<T>& rhs) {
 			//	return this;
@@ -73,7 +73,7 @@ namespace Calcupiler
 			template<typename E, typename = std::is_floating_point<E>>
 			static constexpr T Pow_f(T basis, E exp) {
 				//return exp == 1.0 ? basis : Pow_f(2.2,2);
-				return exp == 1.0 ? basis : Pow_f(e, exp * CSimple<T>::ln(basis));
+				return exp == 1.0 ? basis : Pow_f(e, exp * CBasic<T>::ln(basis));
 			}
 
 			/// <summary>
@@ -174,7 +174,7 @@ namespace Calcupiler
 				for (int k = 1; k < 350; k++)
 				{
 					//res += (Pow(-1, k) * Pow(-1 + (-1 + x), k)) / k;
-					res += (1.0 / (2.0 * static_cast<double>(k) + 1.0)) * CSimple<double>::Pow(((x - 1.0) / (x + 1.0)), 2 * k + 1);
+					res += (1.0 / (2.0 * static_cast<double>(k) + 1.0)) * CBasic<double>::Pow(((x - 1.0) / (x + 1.0)), 2 * k + 1);
 					//res += CSimple<double>::Pow(-1.0, k + 1) * CSimple<double>::Pow(x - 1.0, k) / k;
 				}
 				res *= 2;

@@ -118,13 +118,14 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="src\source.cpp" />
+    <ClCompile Include="test\test_basic_pow.cpp" />
     <ClCompile Include="test\test_simple.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Troubleshooting.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\simple.h" />
+    <ClInclude Include="include\basic.h" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
