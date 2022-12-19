@@ -210,7 +210,7 @@ namespace Calcupiler
 			/// </summary>
 			static constexpr T factorial_i(T k) {
 				return is_integral(k) ?
-					(k < 2 ? k : k * factorial_i(--k)) : factorial_i(k);
+					(k < 2 ? 1 : k * factorial_i(k-1)) : factorial_i(k);
 			}
 
 			static constexpr T factorial_f(T k) {
@@ -227,20 +227,18 @@ namespace Calcupiler
 			template<typename E>
 			static constexpr T Pow(T basis, E exp) {
 				return basis == static_cast<T>(0) ? static_cast<T>(0) // if basis is zero -> return zero
-					: is_negative(exp) ? 1 / Pow_i(basis, -1.0 * exp)
-					: (is_integral(exp) ? Pow_i(basis, exp) : Pow_f(basis, exp));
+					: is_negative(exp) ? (1 / Pow(basis, -1.0 * exp))
+					: is_integral(exp) ? Pow_i(basis, exp) : Pow_f(basis, exp);
 			}
 
-		private:
+		public:
 
 			/// <summary>
 			/// Power for integral type of exp over basis
 			/// </summary>
 			template<typename E, typename = std::is_integral<E>>
 			static constexpr T Pow_i(T basis, E exp) {
-				return is_integral(exp) ?
-					(exp == 1 ? basis : basis * Pow_i(basis, exp - 1))
-					: Pow(basis, exp);
+				return exp == 0 ? 1 : exp == 1 ? basis : basis * Pow_i(basis, exp - 1);
 			}
 
 			/// <summary>
@@ -249,7 +247,13 @@ namespace Calcupiler
 			template<typename E, typename = std::is_floating_point<E>>
 			static constexpr T Pow_f(T basis, E exp) {
 				//return exp == 1.0 ? basis : Pow_f(2.2,2);
-				return exp == 1.0 ? basis : Pow_f(e, exp * CBasic<T>::ln(basis));
+				//return exp == 1.0 ? basis : Pow(e, exp * CBasic<T>::ln(basis));
+				T res = static_cast<T>(0);
+				for (int n = 0; n < 10; n++)
+				{
+					res += ((Pow(exp, n) * Pow(ln(basis), n)) / factorial(n));
+				}
+				return res;
 			}
 			
 #ifdef e
@@ -283,10 +287,21 @@ namespace Calcupiler
 			///// <summary>
 			///// Power of exp over e (euler's number)
 			///// </summary>
-			template<typename E, typename = std::is_integral<E>>
-			static constexpr T e_exp(E exp) {
-				return is_integral(exp) ?
-					(exp == 1 ? e : Pow_i(e, exp)) : e_exp_f(exp, 1.0, 10);
+			template<typename E>
+			static constexpr T exp(E x) {
+				if (x == static_cast<T>(0))
+				{ 
+					return 1;
+				}
+				else 
+				{
+					T res = static_cast<T>(0);
+					for (int i = 0; i < 100; i++)
+					{
+						res += (Pow(x, i) / factorial(i));
+					}
+					return res;
+				}
 			}
 
 		private:
@@ -315,7 +330,8 @@ namespace Calcupiler
 					T res = 0.0;
 					for (int k = 1; k < 100; k++)
 					{
-						res += (Pow(-1, k) * Pow(-1 + x, k)) / k;
+						res += (Pow(x - 1, k) / (k * Pow(x, k)));
+						//res += (Pow(-1, k) * Pow(-1 + x, k)) / k;
 					}
 					return -res;
 				}
@@ -348,6 +364,28 @@ namespace Calcupiler
 				return res;
 			}
 			
+		public:
+			/// <summary>
+			/// Logarithmus of x; For x > 0 && x < 1
+			/// </summary>
+			//static constexpr T log(T x) {
+			//	if (x == static_cast<T>(1)) return static_cast<T>(0);
+
+			//	if (x < static_cast<T>(1)) {
+			//		T res = 0.0;
+			//		for (int k = 1; k < 100; k++)
+			//		{
+			//			res += (Pow(-1, k) * Pow(-1 + x, k)) / k;
+			//		}
+			//		return -res;
+			//	}
+			//	else
+			//	{
+			//		return ln2(x);
+			//	}
+			//}
+		private:
+
 		public:
 
 			/// <summary>

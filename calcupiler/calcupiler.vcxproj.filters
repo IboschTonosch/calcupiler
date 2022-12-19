@@ -16,6 +16,9 @@
     <ClCompile Include="test\test_basic_binomial.cpp">
       <Filter>test</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_basic_exp.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="test">

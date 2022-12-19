@@ -178,8 +178,7 @@ static void TEST_BASIC_POWER_TO_THE_NEGATIVE_INT()
 
 static void TEST_BASIC_POWER_TO_THE_DOUBLE()
 {
-	// POWER TO THE -1
-	//static_assert(isWithinTolerance(CBasic<double>::Pow(-1000.0, 1.2), -0.001), "pow function failed");
+	//static_assert(isWithinTolerance(CBasic<double>::Pow_f(3.0, 2.3), 12.5135), "pow function failed");
 
 	//static_assert(isWithinTolerance(CBasic<double>::Pow(-99.0, -1), -0.0101010101), "pow function failed");
 

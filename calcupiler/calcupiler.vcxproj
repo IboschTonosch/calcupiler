@@ -119,6 +119,7 @@
   <ItemGroup>
     <ClCompile Include="src\source.cpp" />
     <ClCompile Include="test\test_basic_binomial.cpp" />
+    <ClCompile Include="test\test_basic_exp.cpp" />
     <ClCompile Include="test\test_basic_factorial.cpp" />
     <ClCompile Include="test\test_basic_pow.cpp" />
     <ClCompile Include="test\test_simple.cpp" />

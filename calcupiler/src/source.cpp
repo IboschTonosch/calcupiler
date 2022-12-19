@@ -1,7 +1,7 @@
 #include "../include/basic.h"
 
 #include <string>
-#include <math.h>
+#include <cmath>
 #include <type_traits>
 #include <typeinfo>
 
@@ -32,7 +32,7 @@ using SimpleCalculator = CBasic<double>;
 
 int main() 
 {
-	
+	//constexpr auto bla = CBasic<double>::Pow_f(3.0, 2);
 
 	return 0;
 }
