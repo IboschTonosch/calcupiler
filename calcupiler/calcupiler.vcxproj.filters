@@ -18,9 +18,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Troubleshooting.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="test">
       <UniqueIdentifier>{47d717cb-9821-4e45-b0f9-33c27914acdc}</UniqueIdentifier>
     </Filter>

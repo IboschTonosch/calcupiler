@@ -123,9 +123,3 @@
 //	//constexpr auto ln4 = CSimple<double>::ln(3);
 //	//static_assert(isWithinTolerance(ln4, 1.09861));
 //}
-//
-//static void SIMPLE_TEST_BINOMIAL_DOUBLE()
-//{
-//	constexpr auto binomial1 = CSimple<int>::binomial(3, 2);
-//	static_assert(isWithinTolerance(binomial1, 3));
-//}

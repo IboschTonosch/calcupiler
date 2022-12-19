@@ -124,9 +124,6 @@
     <ClCompile Include="test\test_simple.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Troubleshooting.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="include\basic.h" />
     <ClInclude Include="test\test_helper.hpp" />
   </ItemGroup>

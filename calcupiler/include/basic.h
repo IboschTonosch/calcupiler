@@ -14,30 +14,152 @@ namespace Calcupiler
 		template<typename T, typename = std::remove_reference_t<std::decay_t<T>>>
 		class CBasic
 		{
-		public:
-			//constexpr bool is_type_char(){
-			//	return std::is_same_v<T, char>;
-			//};
 
-			template<typename N>
-			static constexpr bool is_negative(N value)
-			{
-				return value < 0;
-			}
+			/// <summary>
+			/// Delete standard constructor
+			/// </summary>
+			//constexpr CBasic() = delete;
 
-			static_assert(
-				(std::is_integral_v<T> || std::is_floating_point_v<T>), 
-				"Type must be either integral or floating point"
-				);
-			static_assert(!std::is_same_v<T, char>, "Character type is not allowed");
-			
-			constexpr CBasic() = delete;
+			/// <summary>
+			/// Do not allow object instantiation
+			/// </summary>
+			CBasic() = delete;
+
+			/// <summary>
+			/// Delete destructor
+			/// </summary>
 			~CBasic() = delete;
 
 			//static constexpr SimpleCalc<T>& operator+(const SimpleCalc<T>& rhs) {
 			//	return this;
 			//}
 
+		private:
+
+			// #####################################################################################
+			// STRONG TYPE CHECKING
+			// #####################################################################################
+
+			/// <summary>
+			/// Assertion check if T is of type integral or floating point
+			/// Compiler throws error if T is not integral or floating point
+			/// </summary>
+			static_assert(
+				(std::is_same_v<T, int> 
+					|| std::is_same_v<T, long>
+					|| std::is_same_v<T, __int128>
+					|| std::is_same_v<T, float>
+					|| std::is_same_v<T, double>
+					|| std::is_same_v<T, long double>
+					),
+				"Type must be either integral or floating point"
+				);
+
+			/// <summary>
+			/// Assertion check if T is of type char
+			/// Compiler throws error if T is char
+			/// </summary>
+			static_assert(
+				!std::is_same_v<T, char>, 
+				"Character type is not allowed"
+				);
+
+			/// <summary>
+			/// Checking for singed 4 Byte integral type
+			/// Allowed values are from -(2^31) to +(2^31)
+			/// </summary>
+			/// <param name="value">The value to be checked</param>
+			/// <returns>Returns True if value is checked type. Otherwise returns false</returns>
+			static constexpr bool is_int(T value)
+			{
+				return std::is_same_v<T, decltype(value)>;
+			}
+
+			/// <summary>
+			/// Checking for Singed 8 Byte integral type
+			/// Allowed values are from -(2^63) to +(2^63)
+			/// </summary>
+			/// <param name="value">The value to be checked</param>
+			/// <returns>Returns True if value is checked type. Otherwise returns false</returns>
+			static constexpr bool is_long(T value)
+			{
+				return std::is_same_v<T, long>;
+			}
+
+			/// <summary>
+			/// Checking for Singed 16 Byte integral type
+			/// Allowed values are from -(2^127) to +(2^127)
+			/// </summary>
+			/// <param name="value">The value to be checked</param>
+			/// <returns>Returns True if value is checked type. Otherwise returns false</returns>
+			static constexpr bool is_int128(T value)
+			{
+				return std::is_same_v<T, __int128>;
+			}
+
+			/// <summary>
+			/// Checking for Singed 4 Byte floating point type
+			/// </summary>
+			/// <param name="value">The value to be checked</param>
+			/// <returns>Returns True if value is checked type. Otherwise returns false</returns>
+			static constexpr bool is_float(T value)
+			{
+				return std::is_same_v<T, float>;
+			}
+
+			/// <summary>
+			/// Checking for Singed 8 Byte floating point type
+			/// </summary>
+			/// <param name="value">The value to be checked</param>
+			/// <returns>Returns True if value is checked type. Otherwise returns false</returns>
+			static constexpr bool is_double(T value)
+			{
+				return std::is_same_v<T, double>;
+			}
+
+			/// <summary>
+			/// Checking for Singed 16 Byte floating point type
+			/// </summary>
+			/// <param name="value">The value to be checked</param>
+			/// <returns>Returns True if value is checked type. Otherwise returns false</returns>
+			static constexpr bool is_long_double(T value)
+			{
+				return std::is_same_v<T, long double>;
+			}
+
+			static constexpr bool is_integral(T value)
+			{
+				return is_int(value) || is_long(value) || is_int128(value);
+			}
+
+			static constexpr bool is_floating_point(T value)
+			{
+				return is_float(value) || is_double || is_long_double(value);
+			}
+			
+			// #####################################################################################
+			// Value Checking
+			// #####################################################################################
+
+			/// <summary>
+			/// Checks if given value is a negative number
+			/// </summary>
+			/// <typeparam name="N">Generic type of the given value</typeparam>
+			/// <param name="value">The value to be checked</param>
+			/// <returns>True if value is a negative number. Otherwise false</returns>
+			template<typename N>
+			static constexpr bool is_negative(N value)
+			{
+				return value < 0;
+			}
+
+		public:
+
+			// #####################################################################################
+			// MAIN BASIC MATHEMATICS IMPLEMENTATION
+			// #####################################################################################
+
+			// Simple operations
 			//######################################################
 			static constexpr T Sum(const T lhs, const T rhs) noexcept {
 				return lhs + rhs;
@@ -74,23 +196,30 @@ namespace Calcupiler
 			//#########################################################
 
 			/// <summary>
-			/// The factorial of k
+			/// Factorial of k
 			/// </summary>
 			static constexpr T factorial(T k) {
-				return std::is_integral_v<T> ?
+				return is_integral(k) ?
 					factorial_i(k) : factorial_f(k);
 			}
 
-			template<typename E, typename = std::is_integral<E>>
-			static constexpr E factorial_i(E k) {
-				static_assert(std::is_integral_v<E>, "Only integral types are allowed.");
-				return k < 2 ? k : k * factorial_i(--k);
+		private:
+
+			/// <summary>
+			/// Factorial of k for integral types
+			/// </summary>
+			static constexpr T factorial_i(T k) {
+				return is_integral(k) ?
+					(k < 2 ? k : k * factorial_i(--k)) : factorial_i(k);
 			}
 
 			static constexpr T factorial_f(T k) {
-				return 1.0;
+				//static_assert(std::is_integral_v<T>, "Factorial of floating point numbers is not implemented yet.");
+				return k;
 				//TODO:: implement floating point factorial
 			}
+
+		public:
 
 			/// <summary>
 			/// Power of exp over basis
@@ -99,15 +228,19 @@ namespace Calcupiler
 			static constexpr T Pow(T basis, E exp) {
 				return basis == static_cast<T>(0) ? static_cast<T>(0) // if basis is zero -> return zero
 					: is_negative(exp) ? 1 / Pow_i(basis, -1.0 * exp)
-					: (std::is_integral_v<E> ? Pow_i(basis, exp) : Pow_f(basis, exp));
+					: (is_integral(exp) ? Pow_i(basis, exp) : Pow_f(basis, exp));
 			}
+
+		private:
 
 			/// <summary>
 			/// Power for integral type of exp over basis
 			/// </summary>
 			template<typename E, typename = std::is_integral<E>>
 			static constexpr T Pow_i(T basis, E exp) {
-				return (exp == 1 ? basis : basis * Pow_i(basis, exp - 1));
+				return is_integral(exp) ?
+					(exp == 1 ? basis : basis * Pow_i(basis, exp - 1))
+					: Pow(basis, exp);
 			}
 
 			/// <summary>
@@ -145,15 +278,18 @@ namespace Calcupiler
 
 #endif // !e
 
+		public:
 
 			///// <summary>
 			///// Power of exp over e (euler's number)
 			///// </summary>
 			template<typename E, typename = std::is_integral<E>>
 			static constexpr T e_exp(E exp) {
-				return std::is_integral_v<E> ? 
+				return is_integral(exp) ?
 					(exp == 1 ? e : Pow_i(e, exp)) : e_exp_f(exp, 1.0, 10);
 			}
+
+		private:
 
 			//template<typename E, typename = std::is_integral<E>>
 			//static constexpr T e_exp_i(T exp, T res, E n) {
@@ -166,8 +302,9 @@ namespace Calcupiler
 				return exp == 1.0 ? e : 
 					n == 0 ? res : e_exp_f(exp, res + (Pow_i(exp, n) / factorial_i(n)), n-1);
 			}
-			//static constexpr T series()
 			
+		public:
+
 			/// <summary>
 			/// Logarithmus naturales of x; For x > 0 && x < 1
 			/// </summary>
@@ -187,6 +324,8 @@ namespace Calcupiler
 					return ln2(x);
 				}
 			}
+
+		private:
 
 			/// <summary>
 			/// Logarithmus naturales of x for x > 1
@@ -209,6 +348,8 @@ namespace Calcupiler
 				return res;
 			}
 			
+		public:
+
 			/// <summary>
 			/// Binomial coefficient with n over k.
 			/// </summary>
